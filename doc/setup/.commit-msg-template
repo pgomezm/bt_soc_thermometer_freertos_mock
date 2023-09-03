@@ -1,0 +1,26 @@
+# **** Include a 1-line description for the commit ending on a list of IDs in parentheses.
+#
+<Change Description> (#ID, #ID, #ID)                  **** <- UPDATE THIS LINE
+#
+# **** Include a list of all work items with a status [PENDING/ACTIVE/COMPLETE/REMOVED].
+********************
+Work Items:
+* Task #0: Clean up code [COMPLETE]                   **** <- UPDATE THIS LINE
+#
+# **** Include a detailed list of all changes associated to each work item.
+********************
+Details:
+* Task #0:                                            **** <- UPDATE THESE LINES
+  * Removed function addTimeofDay from file ttrX.js.  **** <- UPDATE THESE LINES
+  * Removed global variable my_ts from file ttrX.js.  **** <- UPDATE THESE LINES
+#
+# **** Include a list with any pertinent additional notes.
+********************
+Notes:
+* The code compiles with 100 warnings.                **** <- UPDATE THESE LINES
+* Time reported is MST.                               **** <- UPDATE THESE LINES
+********************
+# **** DO NOT ADD TEXT BELOW THIS LINE
+# **** DO NOT REMOVE THE LINES BELOW
+Commit template version 1.0.1
+********************
