@@ -1,0 +1,1 @@
+# bt_soc_thermometer_freertos_mock
