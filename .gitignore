@@ -50,3 +50,4 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+/drivers/acc_low_level_driver_lis2d_09132023_1437.zip

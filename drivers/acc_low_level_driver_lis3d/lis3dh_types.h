@@ -99,10 +99,10 @@ typedef enum {
  */
 typedef enum {
 
-    lis3dh_bypass = 0,     // default
-    lis3dh_fifo   = 1,
-    lis3dh_stream = 2,
-    lis3dh_trigger= 3
+    lis3dh_bypass  = 0,     // default
+    lis3dh_fifo    = 1,
+    lis3dh_stream  = 2,
+    lis3dh_trigger = 3
 
 } lis3dh_fifo_mode_t;
 

@@ -51,7 +51,7 @@ static QueueHandle_t gpio_evt_queue = NULL;
 /**
  * Common function used to get sensor data.
  */
-void read_data ()
+void read_data_lis3dh (void)
 {
     #ifdef FIFO_MODE
 
@@ -89,7 +89,7 @@ void read_data ()
 
 // User task that fetches the sensor values.
 
-void user_task_interrupt (void *pvParameters)
+void lis3d_interrupt_task (void *pvParameters)
 {
   (void)*pvParameters;
   uint8_t gpio_num;
@@ -117,13 +117,13 @@ void user_task_interrupt (void *pvParameters)
       // in case of DRDY interrupt or inertial event interrupt read one data sample
       if (data_src.data_ready)
       {
-        read_data ();
+        read_data_lis3dh ();
       }
 
       // in case of FIFO interrupts read the whole FIFO
       else  if (data_src.fifo_watermark || data_src.fifo_overrun)
       {
-        read_data ();
+        read_data_lis3dh ();
       }
       // in case of event interrupt
       else if (event_src.active)
@@ -233,7 +233,7 @@ void rotation_init (lis3dh_sensor_t *dev)
   lis3dh_set_mode (acc_dev, lis3dh_odr_100, lis3dh_high_res, true, true, true);
 
   // create a task that is triggered only in case of interrupts to fetch the data
-  xTaskCreate(user_task_interrupt, "user_task_interrupt", configMINIMAL_STACK_SIZE, NULL, 2, NULL);
+  xTaskCreate(lis3d_interrupt_task, "user_task_interrupt", configMINIMAL_STACK_SIZE, NULL, 2, NULL);
 
   return;
 }

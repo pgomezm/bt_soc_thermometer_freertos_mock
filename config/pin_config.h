@@ -183,6 +183,32 @@
 #define INT_ACC_PIN                              3
 #endif
 
+// $[CUSTOM_PIN_NAME]
+#ifndef VL53L1X_INT_PORT
+#define IVL53L1X_INT_PORT                        gpioPortB
+#endif
+#ifndef VL53L1X_INT_PIN
+#define VL53L1X_INT_PIN                          4
+#endif
+
+// $[CUSTOM_PIN_NAME]
+#ifndef INT_MG_PORT
+#define INT_MG_PORT                              gpioPortB
+#endif
+#ifndef INT_MG_PIN
+#define INT_MG_PIN                               5
+#endif
+
+// $[CUSTOM_PIN_NAME]
+#ifndef INT_PR_PORT
+#define INT_PR_PORT                              gpioPortB
+#endif
+#ifndef INT_PR_PIN
+#define INT_PR_PIN                               5
+#endif
+
+
+
 // [CUSTOM_PIN_NAME]$
 
 #endif // PIN_CONFIG_H

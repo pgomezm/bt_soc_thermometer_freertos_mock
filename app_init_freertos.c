@@ -39,6 +39,11 @@
 #include "sl_i2cspm_devices_config.h"
 #include "rotation_driver.h"
 #include "lis3dh.h"
+#include "lis2d.h"
+#include "lis2mdl.h"
+#include "lps22hh.h"
+#include "tof_driver.h"
+#include "VL53L1X_api.h"
 
 #define APP_INIT_TASK_NAME          "app_init"
 #define APP_INIT_TASK_STACK_SIZE    400
@@ -68,15 +73,53 @@ void app_init_task(void *p_arg)
     app_log_nl();
   }
 
+  #ifdef LIS3D
   static lis3dh_sensor_t* sensor = 0;
-  // init the sensor with slave address LIS3DH_I2C_ADDRESS_1 connected to I2C_BUS.
+  // init the sensor with slave address LIS3DH_I2C_ADDRESS_2 connected to I2C_BUS.
   sensor = lis3dh_init_sensor (I2C0, LIS3DH_I2C_ADDRESS_2, 0);
   if (sensor)
   {
     app_log_info("LIS3D initialised\n");
     rotation_init (sensor);
   }
+  #endif
 
+  //#ifdef LIS2D
+  static lis2d_sensor_t* sensor_acc = 0;
+  // init the sensor with slave address LIS2D_I2C_ADDRESS_2 connected to I2C_BUS.
+  sensor_acc = lis2d_init_sensor (I2C0, LIS2DTW12_I2C_ADD_L, 0);
+  if (sensor_acc)
+  {
+    app_log_info("LIS2D initialised\n");
+  }
+  //#endif
+
+  //#ifdef LIS2MDL
+  static lis2mdl_sensor_t* sensor_mg = 0;
+  // init the sensor with slave address LIS2D_I2C_ADDRESS_2 connected to I2C_BUS.
+  sensor_mg = lis2mdl_init_sensor (I2C0, LIS2MDL_I2C_ADD, 0);
+  if (sensor_mg)
+  {
+    app_log_info("LIS2MDL initialised\n");
+  }
+  //#endif
+
+  //#ifdef LPS22HH
+  static lps22hh_sensor_t* sensor_pr = 0;
+  // init the sensor with slave address LIS2D_I2C_ADDRESS_2 connected to I2C_BUS.
+  sensor_pr = lps22hh_init_sensor (I2C0, LPS22HH_I2C_ADD_L, 0);
+  if (sensor_pr)
+  {
+    app_log_info("LPS22HH initialised\n");
+  }
+  //#endif
+
+  //#ifdef ToF
+  if (tof_init () == 0)
+  {
+    app_log_info("ToF initialised\n");
+  }
+  //#endif
   vTaskDelete(NULL);
 }
 

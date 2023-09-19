@@ -63,6 +63,8 @@
 #include "lis3dh.h"
 #include "i2c_low_level_driver.h"
 
+#ifdef LIS3D
+
 #if defined(LIS3DH_DEBUG_LEVEL_2)
 #define debug(s, f, ...) app_log_warning("%s %s: " s "\n", "LIS3DH", f, ## __VA_ARGS__)
 #define debug_dev(s, f, d, ...) app_log_warning("%s %s: bus I2C0, addr %02x - " s "\n", "LIS3DH", f, d->addr, ## __VA_ARGS__)
@@ -127,23 +129,23 @@ struct lis3dh_reg_ctrl3
 
 struct lis3dh_reg_ctrl4
 {
-    uint8_t SIM :1;        // CTRL4<0>   SPI serial interface selection
-    uint8_t ST  :2;        // CTRL4<2:1> Self test enable
-    uint8_t HR  :1;        // CTRL4<3>   High resolution output mode
-    uint8_t FS  :2;        // CTRL4<5:4> Full scale selection
-    uint8_t BLE :1;        // CTRL4<6>   Big/litle endian data selection
-    uint8_t BDU :1;        // CTRL4<7>   Block data update
+    uint8_t SIM :1;  // CTRL4<0>   SPI serial interface selection
+    uint8_t ST  :2;  // CTRL4<2:1> Self test enable
+    uint8_t HR  :1;  // CTRL4<3>   High resolution output mode
+    uint8_t FS  :2;  // CTRL4<5:4> Full scale selection
+    uint8_t BLE :1;  // CTRL4<6>   Big/litle endian data selection
+    uint8_t BDU :1;  // CTRL4<7>   Block data update
 };
 
 struct lis3dh_reg_ctrl5
 {
-    uint8_t D4D_INT2 :1;   // CTRL5<0>   4D detection enabled on INT1
-    uint8_t LIR_INT2 :1;   // CTRL5<1>   Latch interrupt request on INT1
-    uint8_t D4D_INT1 :1;   // CTRL5<2>   4D detection enabled on INT2
-    uint8_t LIR_INT1 :1;   // CTRL5<3>   Latch interrupt request on INT1
-    uint8_t unused   :2;   // CTRL5<5:4> unused
-    uint8_t FIFO_EN  :1;   // CTRL5<6>   FIFO enabled
-    uint8_t BOOT     :1;   // CTRL5<7>   Reboot memory content
+    uint8_t D4D_INT2 :1;  // CTRL5<0>   4D detection enabled on INT1
+    uint8_t LIR_INT2 :1;  // CTRL5<1>   Latch interrupt request on INT1
+    uint8_t D4D_INT1 :1;  // CTRL5<2>   4D detection enabled on INT2
+    uint8_t LIR_INT1 :1;  // CTRL5<3>   Latch interrupt request on INT1
+    uint8_t unused   :2;  // CTRL5<5:4> unused
+    uint8_t FIFO_EN  :1;  // CTRL5<6>   FIFO enabled
+    uint8_t BOOT     :1;  // CTRL5<7>   Reboot memory content
 };
 
 struct lis3dh_reg_ctrl6
@@ -173,18 +175,6 @@ struct lis3dh_reg_fifo_src
     uint8_t WTM       :1;  // FIFO_SRC<7>    FIFO content exceeds watermark
 };
 
-struct lis3dh_reg_intx_cfg
-{
-    uint8_t XLIE :1;   // INTx_CFG<0>    X axis below threshold enabled
-    uint8_t XHIE :1;   // INTx_CFG<1>    X axis above threshold enabled
-    uint8_t YLIE :1;   // INTx_CFG<2>    Y axis below threshold enabled
-    uint8_t YHIE :1;   // INTx_CFG<3>    Y axis above threshold enabled
-    uint8_t ZLIE :1;   // INTx_CFG<4>    Z axis below threshold enabled
-    uint8_t ZHIE :1;   // INTx_CFG<5>    Z axis above threshold enabled
-    uint8_t SIXD :1;   // INTx_CFG<6>    6D/4D orientation detecetion enabled
-    uint8_t AOI  :1;   // INTx_CFG<7>    AND/OR combination of interrupt events
-};
-
 struct lis3dh_reg_intx_src
 {
     uint8_t XL    :1;  // INTx_SRC<0>    X axis below threshold enabled
@@ -211,14 +201,14 @@ struct lis3dh_reg_click_cfg
 
 /** Forward declaration of functions for internal use */
 
-static bool    lis3dh_reset       (lis3dh_sensor_t* dev);
-static bool    lis3dh_is_available(lis3dh_sensor_t* dev);
+static bool    lis3dh_reset        (lis3dh_sensor_t* dev);
+static bool    lis3dh_is_available (lis3dh_sensor_t* dev);
 
-static bool    lis3dh_i2c_read    (lis3dh_sensor_t* dev, uint8_t reg, uint8_t *data, uint16_t len);
-static bool    lis3dh_i2c_write   (lis3dh_sensor_t* dev, uint8_t reg, uint8_t *data, uint16_t len);
-static bool    lis3dh_spi_read    (lis3dh_sensor_t* dev, uint8_t reg, uint8_t *data, uint16_t len);
-static bool    lis3dh_spi_write   (lis3dh_sensor_t* dev, uint8_t reg, uint8_t *data, uint16_t len);
-static bool    spi_device_init    (uint8_t bus, uint8_t cs);
+static bool    lis3dh_i2c_read     (lis3dh_sensor_t* dev, uint16_t reg, uint8_t *data, uint16_t len);
+static bool    lis3dh_i2c_write    (lis3dh_sensor_t* dev, uint16_t reg, uint8_t *data, uint16_t len);
+static bool    lis3dh_spi_read     (lis3dh_sensor_t* dev, uint8_t reg, uint8_t *data, uint16_t len);
+static bool    lis3dh_spi_write    (lis3dh_sensor_t* dev, uint8_t reg, uint8_t *data, uint16_t len);
+static bool    spi_device_init     (uint8_t bus, uint8_t cs);
 
 #define msb_lsb_to_type(t,b,o) (t)(((t)b[o] << 8) | b[o+1])
 #define lsb_msb_to_type(t,b,o) (t)(((t)b[o+1] << 8) | b[o])
@@ -317,7 +307,7 @@ bool lis3dh_set_mode (lis3dh_sensor_t* dev,
     
     // if sensor was in power down mode it takes at least 100 ms to start in another mode
     if (old_odr == lis3dh_power_down && odr != lis3dh_power_down)
-        vTaskDelay (15);
+        vTaskDelay (15 / portTICK_PERIOD_MS);
 
     return true;
 }
@@ -409,7 +399,6 @@ bool lis3dh_get_float_data (lis3dh_sensor_t* dev, lis3dh_float_data_t* data)
     if (!dev || !data) return false;
 
     lis3dh_raw_data_t raw;
-    uint8_t * praw = &raw;
     
     if (!lis3dh_get_raw_data (dev, &raw))
         return false;
@@ -668,10 +657,10 @@ bool lis3dh_set_int_event_config (lis3dh_sensor_t* dev,
         case lis3dh_wake_up     : intx_cfg.AOI = 0; intx_cfg.SIXD = 0; break;
         case lis3dh_free_fall   : intx_cfg.AOI = 1; intx_cfg.SIXD = 0; break;
 
-        case lis3dh_4d_movement : d4d_int = true; /* break */
+        case lis3dh_4d_movement : d4d_int = true;  /* no break */
         case lis3dh_6d_movement : intx_cfg.AOI = 0; intx_cfg.SIXD = 1; break;
 
-        case lis3dh_4d_position : d4d_int = true;
+        case lis3dh_4d_position : d4d_int = true;  /* no break */
         case lis3dh_6d_position : intx_cfg.AOI = 1; intx_cfg.SIXD = 1; break;
     }
 
@@ -1185,11 +1174,9 @@ bool lis3dh_reg_write(lis3dh_sensor_t* dev, uint8_t reg, uint8_t *data, uint16_t
 //    return true;
 //}
 
+#define I2C_AUTO_INCREMENT (0x800)
 
-//#define I2C_AUTO_INCREMENT (0x80)
-#define I2C_AUTO_INCREMENT (0x00)
-
-static bool lis3dh_i2c_read(lis3dh_sensor_t* dev, uint8_t reg, uint8_t *data, uint16_t len)
+static bool lis3dh_i2c_read(lis3dh_sensor_t* dev, uint16_t reg, uint8_t *data, uint16_t len)
 {
     if (!dev || !data) return false;
 
@@ -1220,7 +1207,7 @@ static bool lis3dh_i2c_read(lis3dh_sensor_t* dev, uint8_t reg, uint8_t *data, ui
 }
 
 
-static bool lis3dh_i2c_write(lis3dh_sensor_t* dev, uint8_t reg, uint8_t *data, uint16_t len)
+static bool lis3dh_i2c_write(lis3dh_sensor_t* dev, uint16_t reg, uint8_t *data, uint16_t len)
 {
     if (!dev || !data) return false;
 
@@ -1249,3 +1236,4 @@ static bool lis3dh_i2c_write(lis3dh_sensor_t* dev, uint8_t reg, uint8_t *data, u
 
     return true;
 }
+#endif
