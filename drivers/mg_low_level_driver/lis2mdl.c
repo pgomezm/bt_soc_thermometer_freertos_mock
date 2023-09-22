@@ -40,6 +40,12 @@
 #define error(s, f, ...)
 #define error_dev(s, f, d, ...)
 #endif
+
+/**
+ * MORE EXAMPLES ON THIS PAGE
+ * https://github.com/STMicroelectronics/STMems_Standard_C_drivers/tree/master/lis2mdl_STdC
+*/
+
 /**
   ******************************************************************************
   * @file    lis2mdl_reg.c

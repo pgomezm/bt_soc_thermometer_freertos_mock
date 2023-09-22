@@ -25,7 +25,7 @@
 #include "lis2d_module.h"
 #include "i2c_low_level_driver.h"
 
-/*
+/**
  * MORE EXAMPLES ON THIS PAGE
  * https://github.com/STMicroelectronics/STMems_Standard_C_drivers/tree/master/lis2dtw12_STdC
 */

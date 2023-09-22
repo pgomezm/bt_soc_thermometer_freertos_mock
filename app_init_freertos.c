@@ -84,41 +84,41 @@ void app_init_task(void *p_arg)
   }
   #endif
 
-  //#ifdef LIS2D
-  static lis2d_sensor_t* sensor_acc = 0;
-  // init the sensor with slave address LIS2D_I2C_ADDRESS_2 connected to I2C_BUS.
-  sensor_acc = lis2d_init_sensor (I2C0, LIS2DTW12_I2C_ADD_L, 0);
-  if (sensor_acc)
-  {
-    app_log_info("LIS2D initialised\n");
-  }
-  //#endif
-
-  //#ifdef LIS2MDL
-  static lis2mdl_sensor_t* sensor_mg = 0;
-  // init the sensor with slave address LIS2D_I2C_ADDRESS_2 connected to I2C_BUS.
-  sensor_mg = lis2mdl_init_sensor (I2C0, LIS2MDL_I2C_ADD, 0);
-  if (sensor_mg)
-  {
-    app_log_info("LIS2MDL initialised\n");
-  }
-  //#endif
-
-  //#ifdef LPS22HH
-  static lps22hh_sensor_t* sensor_pr = 0;
-  // init the sensor with slave address LIS2D_I2C_ADDRESS_2 connected to I2C_BUS.
-  sensor_pr = lps22hh_init_sensor (I2C0, LPS22HH_I2C_ADD_L, 0);
-  if (sensor_pr)
-  {
-    app_log_info("LPS22HH initialised\n");
-  }
-  //#endif
-
-  //#ifdef ToF
-  if (tof_init () == 0)
-  {
-    app_log_info("ToF initialised\n");
-  }
+//  //#ifdef LIS2D
+//  static lis2d_sensor_t* sensor_acc = 0;
+//  // init the sensor with slave address LIS2D_I2C_ADDRESS_2 connected to I2C_BUS.
+//  sensor_acc = lis2d_init_sensor (I2C0, LIS2DTW12_I2C_ADD_L, 0);
+//  if (sensor_acc)
+//  {
+//    app_log_info("LIS2D initialised\n");
+//  }
+//  //#endif
+//
+//  //#ifdef LIS2MDL
+//  static lis2mdl_sensor_t* sensor_mg = 0;
+//  // init the sensor with slave address LIS2D_I2C_ADDRESS_2 connected to I2C_BUS.
+//  sensor_mg = lis2mdl_init_sensor (I2C0, LIS2MDL_I2C_ADD, 0);
+//  if (sensor_mg)
+//  {
+//    app_log_info("LIS2MDL initialised\n");
+//  }
+//  //#endif
+//
+//  //#ifdef LPS22HH
+//  static lps22hh_sensor_t* sensor_pr = 0;
+//  // init the sensor with slave address LIS2D_I2C_ADDRESS_2 connected to I2C_BUS.
+//  sensor_pr = lps22hh_init_sensor (I2C0, LPS22HH_I2C_ADD_L, 0);
+//  if (sensor_pr)
+//  {
+//    app_log_info("LPS22HH initialised\n");
+//  }
+//  //#endif
+//
+//  //#ifdef ToF
+//  if (tof_init () == 0)
+//  {
+//    app_log_info("ToF initialised\n");
+//  }
   //#endif
   vTaskDelete(NULL);
 }

@@ -120,9 +120,9 @@ float_t lis2dtw12_from_lsb_to_celsius(int16_t lsb)
 }
 
 /**
-  * @}
-  *
-  */
+ * MORE EXAMPLES ON THIS PAGE
+ * https://github.com/STMicroelectronics/STMems_Standard_C_drivers/tree/master/lis2dtw12_STdC
+*/
 
 /**
   * @defgroup  LIS2DTW12_Data_Generation

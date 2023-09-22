@@ -25,9 +25,9 @@
 #include "lps22hh_module.h"
 #include "i2c_low_level_driver.h"
 
-/*
+/**
  * MORE EXAMPLES ON THIS PAGE
- * https://github.com/STMicroelectronics/STMems_Standard_C_drivers/blob/master/lis2mdl_STdC
+ * https://github.com/STMicroelectronics/STMems_Standard_C_drivers/tree/master/lps22hh_STdC
 */
 
 // LIS2MDL magnetometer

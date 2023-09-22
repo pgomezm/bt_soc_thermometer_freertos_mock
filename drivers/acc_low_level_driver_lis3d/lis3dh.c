@@ -175,6 +175,18 @@ struct lis3dh_reg_fifo_src
     uint8_t WTM       :1;  // FIFO_SRC<7>    FIFO content exceeds watermark
 };
 
+struct lis3dh_reg_intx_cfg
+{
+    uint8_t XLIE :1;   // INTx_CFG<0>    X axis below threshold enabled
+    uint8_t XHIE :1;   // INTx_CFG<1>    X axis above threshold enabled
+    uint8_t YLIE :1;   // INTx_CFG<2>    Y axis below threshold enabled
+    uint8_t YHIE :1;   // INTx_CFG<3>    Y axis above threshold enabled
+    uint8_t ZLIE :1;   // INTx_CFG<4>    Z axis below threshold enabled
+    uint8_t ZHIE :1;   // INTx_CFG<5>    Z axis above threshold enabled
+    uint8_t SIXD :1;   // INTx_CFG<6>    6D/4D orientation detecetion enabled
+    uint8_t AOI  :1;   // INTx_CFG<7>    AND/OR combination of interrupt events
+};
+
 struct lis3dh_reg_intx_src
 {
     uint8_t XL    :1;  // INTx_SRC<0>    X axis below threshold enabled

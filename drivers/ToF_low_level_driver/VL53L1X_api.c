@@ -57,6 +57,15 @@
 *******************************************************************************
 */
 
+/*
+ *
+ *  https://www.youtube.com/watch?v=7yhW7jzaWuY
+ *  https://www.pololu.com/product-info-merged/3415
+ *  https://github.com/pololu/vl53l1x-st-api-arduino/tree/master/vl53l1x-st-api
+ *  https://www.st.com/en/embedded-software/stsw-img007.html
+ *
+ */
+
 /**
  * @file  vl53l1x_api.c
  * @brief Functions implementation

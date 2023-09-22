@@ -40,6 +40,10 @@
 #define error_dev(s, f, d, ...)
 #endif
 
+/**
+ * MORE EXAMPLES ON THIS PAGE
+ * https://github.com/STMicroelectronics/STMems_Standard_C_drivers/tree/master/lps22hh_STdC
+*/
 
 /**
   ******************************************************************************
